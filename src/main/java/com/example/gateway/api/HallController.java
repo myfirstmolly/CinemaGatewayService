@@ -17,7 +17,7 @@ import java.util.UUID;
 @NoArgsConstructor
 public class HallController {
 
-    private final String url = "http://10.99.144.4:8083/hall";
+    private final String url = "http://cinema-halls:8083/hall";
 
     @PostMapping
     public Hall createHall(@RequestBody Hall hall) {
@@ -28,13 +28,16 @@ public class HallController {
     }
 
     @GetMapping
-    public List<Hall> getAllSeances() {
+    public List<Hall> getAllHalls() {
         RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<List<Hall>> result =
-                restTemplate.exchange(url, HttpMethod.GET, null,
-                        new ParameterizedTypeReference<>() {
+        ResponseEntity<List<Hall>> rateResponse =
+                restTemplate.exchange("http://cinema-halls:8083/hall",
+                        HttpMethod.GET,
+                        null,
+                        new ParameterizedTypeReference<List<Hall>>() {
                         });
-        return result.getBody();
+        List<Hall> hall = rateResponse.getBody();
+        return hall;
     }
 
     @GetMapping("{id}")

@@ -17,7 +17,7 @@ import java.util.UUID;
 @NoArgsConstructor
 public class WorkerController {
 
-    private final String url = "http://10.107.230.201:8085/worker";
+    private final String url = "http://cinema-workers:8085/worker";
 
     @PostMapping
     public Worker createWorker(@RequestBody Worker worker) {
@@ -47,5 +47,5 @@ public class WorkerController {
                         });
         return result.getBody();
     }
-    
+
 }

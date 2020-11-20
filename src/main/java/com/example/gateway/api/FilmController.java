@@ -17,7 +17,7 @@ import java.util.UUID;
 @NoArgsConstructor
 public class FilmController {
 
-    private final String url = "http://10.100.60.224:8081/film";
+    private final String url = "http://cinema-films:8081/film";
 
     @PostMapping
     public Film createFilm(@RequestBody Film film) {
@@ -47,5 +47,5 @@ public class FilmController {
                         });
         return result.getBody();
     }
-    
+
 }

@@ -1,7 +1,8 @@
 package com.example.gateway.api;
 
 import com.example.gateway.dto.Seance;
-import lombok.AllArgsConstructor;
+import com.example.gateway.dto.Ticket;
+import com.example.gateway.dto.TicketDto;
 import lombok.NoArgsConstructor;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
@@ -17,7 +18,7 @@ import java.util.UUID;
 @NoArgsConstructor
 public class SeanceController {
 
-    private final String url = "http://10.108.133.183:8082/seance";
+    private final String url = "http://cinema-seances:8082/seance";
 
     @PostMapping
     public Seance createSeance(@RequestBody Seance seance) {
@@ -27,8 +28,20 @@ public class SeanceController {
         return result.getBody();
     }
 
+    @PostMapping("{seanceId}/visitor")
+    public TicketDto buyTicket(@PathVariable(value = "seanceId") UUID id,
+                            @RequestBody(required = false) Ticket ticketRequest) {
+        TicketDto ticketDto = new TicketDto(ticketRequest.getVisitor().getUserId(),
+                ticketRequest.getLine(), ticketRequest.getPlace());
+        RestTemplate restTemplate = new RestTemplate();
+        ResponseEntity<TicketDto> result =
+                restTemplate.postForEntity(url + "/" + id.toString() + "/visitor",
+                        ticketDto, TicketDto.class);
+        return result.getBody();
+    }
+
     @GetMapping
-    public List<Seance> getAllFilms() {
+    public List<Seance> getAllSeances() {
         RestTemplate restTemplate = new RestTemplate();
         ResponseEntity<List<Seance>> result =
                 restTemplate.exchange(url, HttpMethod.GET, null,

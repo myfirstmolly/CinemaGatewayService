@@ -1,12 +1,16 @@
 package com.example.gateway.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.UUID;
 
 @Data
 @AllArgsConstructor
+@NoArgsConstructor
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Hall {
     
     private UUID hallId;
@@ -14,10 +18,4 @@ public class Hall {
     private int linesNum;
     private int seatsNum;
 
-    public Hall(String name, int linesNum, int seatsNum) {
-        hallId = UUID.randomUUID();
-        this.name = name;
-        this.linesNum = linesNum;
-        this.seatsNum = seatsNum;
-    }
 }

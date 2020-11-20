@@ -17,7 +17,7 @@ import java.util.UUID;
 @NoArgsConstructor
 public class VisitorController {
 
-    private final String url = "http://10.99.19.178:8084/visitor";
+    private final String url = "http://cinema-visitors:8084/visitor";
 
     @PostMapping
     public Visitor createVisitor(@RequestBody Visitor visitor) {
@@ -28,7 +28,7 @@ public class VisitorController {
     }
 
     @GetMapping
-    public List<Visitor> getAllFilms() {
+    public List<Visitor> getAllVisitors() {
         RestTemplate restTemplate = new RestTemplate();
         ResponseEntity<List<Visitor>> result =
                 restTemplate.exchange(url, HttpMethod.GET, null,
