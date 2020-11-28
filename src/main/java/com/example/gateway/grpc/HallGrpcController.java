@@ -9,7 +9,7 @@ import org.lognet.springboot.grpc.GRpcService;
 @GRpcService
 public class HallGrpcController extends HallServiceGrpc.HallServiceImplBase {
 
-    private String url = "cinema-halls";
+    private String url = "localhost";
     private final ManagedChannel channel = ManagedChannelBuilder.forAddress(url, 7083).usePlaintext().build();;
     private HallServiceGrpc.HallServiceBlockingStub stub = HallServiceGrpc.newBlockingStub(channel);
 

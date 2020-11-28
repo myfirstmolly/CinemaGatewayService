@@ -9,7 +9,7 @@ import org.lognet.springboot.grpc.GRpcService;
 @GRpcService
 public class VisitorGrpcController extends VisitorServiceGrpc.VisitorServiceImplBase {
 
-    private String url = "cinema-visitors";
+    private String url = "localhost";
     private final ManagedChannel channel = ManagedChannelBuilder.forAddress(url, 7084).usePlaintext().build();;
     private VisitorServiceGrpc.VisitorServiceBlockingStub stub = VisitorServiceGrpc.newBlockingStub(channel);
 
