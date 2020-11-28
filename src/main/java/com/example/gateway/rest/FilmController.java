@@ -1,7 +1,6 @@
-package com.example.gateway.api;
+package com.example.gateway.rest;
 
-import com.example.gateway.dto.Worker;
-import lombok.AllArgsConstructor;
+import com.example.gateway.rest.dto.Film;
 import lombok.NoArgsConstructor;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
@@ -13,24 +12,24 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/worker")
+@RequestMapping("/film")
 @NoArgsConstructor
-public class WorkerController {
+public class FilmController {
 
-    private final String url = "http://cinema-workers:8085/worker";
+    private final String url = "http://cinema-films:8081/film";
 
     @PostMapping
-    public Worker createWorker(@RequestBody Worker worker) {
+    public Film createFilm(@RequestBody Film film) {
         RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<Worker> result =
-                restTemplate.postForEntity(url, worker, Worker.class);
+        ResponseEntity<Film> result =
+                restTemplate.postForEntity(url, film, Film.class);
         return result.getBody();
     }
 
     @GetMapping
-    public List<Worker> getAllWorkers() {
+    public List<Film> getAllFilms() {
         RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<List<Worker>> result =
+        ResponseEntity<List<Film>> result =
                 restTemplate.exchange(url, HttpMethod.GET, null,
                         new ParameterizedTypeReference<>() {
                         });
@@ -38,9 +37,9 @@ public class WorkerController {
     }
 
     @GetMapping("{id}")
-    public Worker getById(@PathVariable(value = "id") UUID id) {
+    public Film getById(@PathVariable(value = "id") UUID id) {
         RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<Worker> result =
+        ResponseEntity<Film> result =
                 restTemplate.exchange(url + "/" + id.toString(),
                         HttpMethod.GET, null,
                         new ParameterizedTypeReference<>() {

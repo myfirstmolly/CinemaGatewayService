@@ -1,7 +1,6 @@
-package com.example.gateway.api;
+package com.example.gateway.rest;
 
-import com.example.gateway.dto.Film;
-import lombok.AllArgsConstructor;
+import com.example.gateway.rest.dto.Visitor;
 import lombok.NoArgsConstructor;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
@@ -13,24 +12,24 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/film")
+@RequestMapping("/visitor")
 @NoArgsConstructor
-public class FilmController {
+public class VisitorController {
 
-    private final String url = "http://cinema-films:8081/film";
+    private final String url = "http://cinema-visitors:8084/visitor";
 
     @PostMapping
-    public Film createFilm(@RequestBody Film film) {
+    public Visitor createVisitor(@RequestBody Visitor visitor) {
         RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<Film> result =
-                restTemplate.postForEntity(url, film, Film.class);
+        ResponseEntity<Visitor> result =
+                restTemplate.postForEntity(url, visitor, Visitor.class);
         return result.getBody();
     }
 
     @GetMapping
-    public List<Film> getAllFilms() {
+    public List<Visitor> getAllVisitors() {
         RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<List<Film>> result =
+        ResponseEntity<List<Visitor>> result =
                 restTemplate.exchange(url, HttpMethod.GET, null,
                         new ParameterizedTypeReference<>() {
                         });
@@ -38,14 +37,14 @@ public class FilmController {
     }
 
     @GetMapping("{id}")
-    public Film getById(@PathVariable(value = "id") UUID id) {
+    public Visitor getById(@PathVariable(value = "id") UUID id) {
         RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<Film> result =
+        ResponseEntity<Visitor> result =
                 restTemplate.exchange(url + "/" + id.toString(),
                         HttpMethod.GET, null,
                         new ParameterizedTypeReference<>() {
                         });
         return result.getBody();
     }
-
+    
 }

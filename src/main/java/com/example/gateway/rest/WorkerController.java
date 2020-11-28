@@ -1,7 +1,6 @@
-package com.example.gateway.api;
+package com.example.gateway.rest;
 
-import com.example.gateway.dto.Visitor;
-import lombok.AllArgsConstructor;
+import com.example.gateway.rest.dto.Worker;
 import lombok.NoArgsConstructor;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
@@ -13,24 +12,24 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/visitor")
+@RequestMapping("/worker")
 @NoArgsConstructor
-public class VisitorController {
+public class WorkerController {
 
-    private final String url = "http://cinema-visitors:8084/visitor";
+    private final String url = "http://cinema-workers:8085/worker";
 
     @PostMapping
-    public Visitor createVisitor(@RequestBody Visitor visitor) {
+    public Worker createWorker(@RequestBody Worker worker) {
         RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<Visitor> result =
-                restTemplate.postForEntity(url, visitor, Visitor.class);
+        ResponseEntity<Worker> result =
+                restTemplate.postForEntity(url, worker, Worker.class);
         return result.getBody();
     }
 
     @GetMapping
-    public List<Visitor> getAllVisitors() {
+    public List<Worker> getAllWorkers() {
         RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<List<Visitor>> result =
+        ResponseEntity<List<Worker>> result =
                 restTemplate.exchange(url, HttpMethod.GET, null,
                         new ParameterizedTypeReference<>() {
                         });
@@ -38,14 +37,14 @@ public class VisitorController {
     }
 
     @GetMapping("{id}")
-    public Visitor getById(@PathVariable(value = "id") UUID id) {
+    public Worker getById(@PathVariable(value = "id") UUID id) {
         RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<Visitor> result =
+        ResponseEntity<Worker> result =
                 restTemplate.exchange(url + "/" + id.toString(),
                         HttpMethod.GET, null,
                         new ParameterizedTypeReference<>() {
                         });
         return result.getBody();
     }
-    
+
 }

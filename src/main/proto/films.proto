@@ -1,0 +1,49 @@
+syntax = "proto3";
+package com.cinema.film;
+option java_multiple_files = true;
+
+enum Genre {
+  G = 0;
+  PG = 1;
+  PG13 = 2;
+  R = 3;
+  NC17 = 4;
+}
+
+message FilmResponse {
+  string id = 1;
+  string name = 2;
+  string director = 3;
+  int32 year = 4;
+  Genre genre = 5;
+}
+
+message FilmRequest {
+  string name = 1;
+  string director = 2;
+  int32 year = 3;
+  Genre genre = 4;
+}
+
+message AllFilmsRequest {
+
+}
+
+message AllFilmsResponse {
+  repeated FilmResponse films = 1;
+}
+
+message FilmByIdRequest {
+  string id = 1;
+}
+
+message DeleteFilmResponse {
+
+}
+
+service FilmService {
+  rpc all(AllFilmsRequest) returns (AllFilmsResponse);
+  rpc add(FilmRequest) returns (FilmResponse);
+  rpc byId(FilmByIdRequest) returns (FilmResponse);
+  rpc delete (FilmByIdRequest) returns (DeleteFilmResponse);
+}
