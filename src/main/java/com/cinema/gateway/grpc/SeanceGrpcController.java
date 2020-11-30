@@ -1,4 +1,4 @@
-package com.example.gateway.grpc;
+package com.cinema.gateway.grpc;
 
 import com.cinema.seance.*;
 import io.grpc.ManagedChannel;
@@ -9,7 +9,7 @@ import org.lognet.springboot.grpc.GRpcService;
 @GRpcService
 public class SeanceGrpcController extends SeanceServiceGrpc.SeanceServiceImplBase {
 
-    private String url = "localhost";
+    private String url = "cinema-seances";
     private final ManagedChannel channel = ManagedChannelBuilder.forAddress(url, 7082).usePlaintext().build();
     private SeanceServiceGrpc.SeanceServiceBlockingStub stub = SeanceServiceGrpc.newBlockingStub(channel);
 

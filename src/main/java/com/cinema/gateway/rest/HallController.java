@@ -1,6 +1,6 @@
-package com.example.gateway.rest;
+package com.cinema.gateway.rest;
 
-import com.example.gateway.rest.dto.Worker;
+import com.cinema.gateway.rest.dto.Hall;
 import lombok.NoArgsConstructor;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
@@ -12,39 +12,42 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/worker")
+@RequestMapping("/hall")
 @NoArgsConstructor
-public class WorkerController {
+public class HallController {
 
-    private final String url = "http://cinema-workers:8085/worker";
+    private final String url = "http://cinema-halls:8083/hall";
 
     @PostMapping
-    public Worker createWorker(@RequestBody Worker worker) {
+    public Hall createHall(@RequestBody Hall hall) {
         RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<Worker> result =
-                restTemplate.postForEntity(url, worker, Worker.class);
+        ResponseEntity<Hall> result =
+                restTemplate.postForEntity(url, hall, Hall.class);
         return result.getBody();
     }
 
     @GetMapping
-    public List<Worker> getAllWorkers() {
+    public List<Hall> getAllHalls() {
         RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<List<Worker>> result =
-                restTemplate.exchange(url, HttpMethod.GET, null,
-                        new ParameterizedTypeReference<>() {
+        ResponseEntity<List<Hall>> rateResponse =
+                restTemplate.exchange("http://cinema-halls:8083/hall",
+                        HttpMethod.GET,
+                        null,
+                        new ParameterizedTypeReference<List<Hall>>() {
                         });
-        return result.getBody();
+        List<Hall> hall = rateResponse.getBody();
+        return hall;
     }
 
     @GetMapping("{id}")
-    public Worker getById(@PathVariable(value = "id") UUID id) {
+    public Hall getById(@PathVariable(value = "id") UUID id) {
         RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<Worker> result =
+        ResponseEntity<Hall> result =
                 restTemplate.exchange(url + "/" + id.toString(),
                         HttpMethod.GET, null,
                         new ParameterizedTypeReference<>() {
                         });
         return result.getBody();
     }
-
+    
 }

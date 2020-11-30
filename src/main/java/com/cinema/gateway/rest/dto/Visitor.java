@@ -1,4 +1,4 @@
-package com.example.gateway.rest.dto;
+package com.cinema.gateway.rest.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
@@ -11,12 +11,11 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class Film {
+public class Visitor {
     
-    private UUID filmId;
+    private UUID userId;
     private String name;
-    private String director;
-    private Integer year;
-    private String genre;
+    private double money;
+    private int age;
 
 }

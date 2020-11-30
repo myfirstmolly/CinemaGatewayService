@@ -1,6 +1,6 @@
-package com.example.gateway.rest;
+package com.cinema.gateway.rest;
 
-import com.example.gateway.rest.dto.Film;
+import com.cinema.gateway.rest.dto.Worker;
 import lombok.NoArgsConstructor;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
@@ -12,24 +12,24 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/film")
+@RequestMapping("/worker")
 @NoArgsConstructor
-public class FilmController {
+public class WorkerController {
 
-    private final String url = "http://cinema-films:8081/film";
+    private final String url = "http://cinema-workers:8085/worker";
 
     @PostMapping
-    public Film createFilm(@RequestBody Film film) {
+    public Worker createWorker(@RequestBody Worker worker) {
         RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<Film> result =
-                restTemplate.postForEntity(url, film, Film.class);
+        ResponseEntity<Worker> result =
+                restTemplate.postForEntity(url, worker, Worker.class);
         return result.getBody();
     }
 
     @GetMapping
-    public List<Film> getAllFilms() {
+    public List<Worker> getAllWorkers() {
         RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<List<Film>> result =
+        ResponseEntity<List<Worker>> result =
                 restTemplate.exchange(url, HttpMethod.GET, null,
                         new ParameterizedTypeReference<>() {
                         });
@@ -37,9 +37,9 @@ public class FilmController {
     }
 
     @GetMapping("{id}")
-    public Film getById(@PathVariable(value = "id") UUID id) {
+    public Worker getById(@PathVariable(value = "id") UUID id) {
         RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<Film> result =
+        ResponseEntity<Worker> result =
                 restTemplate.exchange(url + "/" + id.toString(),
                         HttpMethod.GET, null,
                         new ParameterizedTypeReference<>() {

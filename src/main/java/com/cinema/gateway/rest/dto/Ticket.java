@@ -1,16 +1,16 @@
-package com.example.gateway.rest.dto;
+package com.cinema.gateway.rest.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-
-import java.util.UUID;
+import lombok.NoArgsConstructor;
 
 @Data
 @AllArgsConstructor
+@NoArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class TicketDto {
-    UUID visitorId;
+public class Ticket {
+    Visitor visitor;
     int line;
     int place;
 }

@@ -1,8 +1,8 @@
-package com.example.gateway.rest;
+package com.cinema.gateway.rest;
 
-import com.example.gateway.rest.dto.Seance;
-import com.example.gateway.rest.dto.Ticket;
-import com.example.gateway.rest.dto.TicketDto;
+import com.cinema.gateway.rest.dto.Seance;
+import com.cinema.gateway.rest.dto.Ticket;
+import com.cinema.gateway.rest.dto.TicketDto;
 import lombok.NoArgsConstructor;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
@@ -30,7 +30,7 @@ public class SeanceController {
 
     @PostMapping("{seanceId}/visitor")
     public TicketDto buyTicket(@PathVariable(value = "seanceId") UUID id,
-                            @RequestBody(required = false) Ticket ticketRequest) {
+                               @RequestBody(required = false) Ticket ticketRequest) {
         TicketDto ticketDto = new TicketDto(ticketRequest.getVisitor().getUserId(),
                 ticketRequest.getLine(), ticketRequest.getPlace());
         RestTemplate restTemplate = new RestTemplate();

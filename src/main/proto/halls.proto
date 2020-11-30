@@ -27,6 +27,10 @@ message HallByIdRequest {
   string id = 1;
 }
 
+message HallByNameRequest {
+  string name = 1;
+}
+
 message DeleteHallResponse {
 
 }
@@ -35,5 +39,6 @@ service HallService {
   rpc all(AllHallRequest) returns (AllHallsResponse);
   rpc add(HallRequest) returns (HallResponse);
   rpc byId(HallByIdRequest) returns (HallResponse);
+  rpc byName(HallByNameRequest) returns (HallResponse);
   rpc delete (HallByIdRequest) returns (DeleteHallResponse);
 }

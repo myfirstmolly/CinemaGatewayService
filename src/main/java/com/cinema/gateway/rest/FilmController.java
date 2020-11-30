@@ -1,6 +1,6 @@
-package com.example.gateway.rest;
+package com.cinema.gateway.rest;
 
-import com.example.gateway.rest.dto.Hall;
+import com.cinema.gateway.rest.dto.Film;
 import lombok.NoArgsConstructor;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
@@ -12,42 +12,39 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/hall")
+@RequestMapping("/film")
 @NoArgsConstructor
-public class HallController {
+public class FilmController {
 
-    private final String url = "http://cinema-halls:8083/hall";
+    private final String url = "http://cinema-films:8081/film";
 
     @PostMapping
-    public Hall createHall(@RequestBody Hall hall) {
+    public Film createFilm(@RequestBody Film film) {
         RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<Hall> result =
-                restTemplate.postForEntity(url, hall, Hall.class);
+        ResponseEntity<Film> result =
+                restTemplate.postForEntity(url, film, Film.class);
         return result.getBody();
     }
 
     @GetMapping
-    public List<Hall> getAllHalls() {
+    public List<Film> getAllFilms() {
         RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<List<Hall>> rateResponse =
-                restTemplate.exchange("http://cinema-halls:8083/hall",
-                        HttpMethod.GET,
-                        null,
-                        new ParameterizedTypeReference<List<Hall>>() {
+        ResponseEntity<List<Film>> result =
+                restTemplate.exchange(url, HttpMethod.GET, null,
+                        new ParameterizedTypeReference<>() {
                         });
-        List<Hall> hall = rateResponse.getBody();
-        return hall;
+        return result.getBody();
     }
 
     @GetMapping("{id}")
-    public Hall getById(@PathVariable(value = "id") UUID id) {
+    public Film getById(@PathVariable(value = "id") UUID id) {
         RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<Hall> result =
+        ResponseEntity<Film> result =
                 restTemplate.exchange(url + "/" + id.toString(),
                         HttpMethod.GET, null,
                         new ParameterizedTypeReference<>() {
                         });
         return result.getBody();
     }
-    
+
 }

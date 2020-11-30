@@ -1,4 +1,4 @@
-package com.example.gateway.grpc;
+package com.cinema.gateway.grpc;
 
 import com.cinema.film.*;
 import io.grpc.ManagedChannel;
@@ -9,7 +9,7 @@ import org.lognet.springboot.grpc.GRpcService;
 @GRpcService
 public class FilmGrpcController extends FilmServiceGrpc.FilmServiceImplBase {
 
-    private String url = "localhost";
+    private String url = "cinema-films";
     private final ManagedChannel channel = ManagedChannelBuilder.forAddress(url, 7081).usePlaintext().build();;
     private FilmServiceGrpc.FilmServiceBlockingStub stub = FilmServiceGrpc.newBlockingStub(channel);
 

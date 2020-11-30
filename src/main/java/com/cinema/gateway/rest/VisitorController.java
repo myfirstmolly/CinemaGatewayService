@@ -1,6 +1,6 @@
-package com.example.gateway.rest;
+package com.cinema.gateway.rest;
 
-import com.example.gateway.rest.dto.Visitor;
+import com.cinema.gateway.rest.dto.Visitor;
 import lombok.NoArgsConstructor;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
