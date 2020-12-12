@@ -1,7 +1,11 @@
 package com.cinema.gateway.rest;
 
 import com.cinema.gateway.rest.dto.Film;
+import com.cinema.gateway.rest.dto.Genre;
 import lombok.NoArgsConstructor;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +21,13 @@ import java.util.UUID;
 public class FilmController {
 
     private final String url = "http://cinema-films:8081/film";
+    
+    @Autowired
+    private RabbitTemplate rabbitTemplate;
+    @Value("${rabbitmq.exchange}")
+    private String exchange;
+    @Value("${film.routing-key}")
+    private String routingKey;
 
     @PostMapping
     public Film createFilm(@RequestBody Film film) {
@@ -25,6 +36,13 @@ public class FilmController {
                 restTemplate.postForEntity(url, film, Film.class);
         return result.getBody();
     }
+
+    @PostMapping("mq")
+    public String createFilmMq(@RequestBody Film film) {
+        rabbitTemplate.convertAndSend(exchange, routingKey, film);
+        return "Sent successfully";
+    }
+
 
     @GetMapping
     public List<Film> getAllFilms() {

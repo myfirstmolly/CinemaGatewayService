@@ -9,7 +9,7 @@ import org.lognet.springboot.grpc.GRpcService;
 @GRpcService
 public class FilmGrpcController extends FilmServiceGrpc.FilmServiceImplBase {
 
-    private String url = "cinema-films";
+    private String url = "localhost";
     private final ManagedChannel channel = ManagedChannelBuilder.forAddress(url, 7081).usePlaintext().build();;
     private FilmServiceGrpc.FilmServiceBlockingStub stub = FilmServiceGrpc.newBlockingStub(channel);
 
@@ -40,6 +40,16 @@ public class FilmGrpcController extends FilmServiceGrpc.FilmServiceImplBase {
                 setId(request.getId()).
                 build();
         FilmResponse response = stub.byId(filmRequest);
+        responseObserver.onNext(response);
+        responseObserver.onCompleted();
+    }
+
+    @Override
+    public void byName(FilmByNameRequest request, StreamObserver<FilmResponse> responseObserver) {
+        FilmByNameRequest filmRequest = FilmByNameRequest.newBuilder().
+                setName(request.getName()).
+                build();
+        FilmResponse response = stub.byName(filmRequest);
         responseObserver.onNext(response);
         responseObserver.onCompleted();
     }

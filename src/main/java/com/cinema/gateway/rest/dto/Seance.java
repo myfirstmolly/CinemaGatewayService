@@ -16,7 +16,7 @@ public class Seance {
     private UUID seanceId;
     private String seanceDate;
     private double price;
-    private UUID hallID;
-    private UUID filmID;
+    private UUID hallId;
+    private UUID filmId;
 
 }

@@ -1,7 +1,11 @@
 package com.cinema.gateway.rest;
 
+import com.cinema.gateway.rest.dto.Visitor;
 import com.cinema.gateway.rest.dto.Worker;
 import lombok.NoArgsConstructor;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
@@ -18,12 +22,25 @@ public class WorkerController {
 
     private final String url = "http://cinema-workers:8085/worker";
 
+    @Autowired
+    private RabbitTemplate rabbitTemplate;
+    @Value("${rabbitmq.exchange}")
+    private String exchange;
+    @Value("${worker.routing-key}")
+    private String routingKey;
+
     @PostMapping
     public Worker createWorker(@RequestBody Worker worker) {
         RestTemplate restTemplate = new RestTemplate();
         ResponseEntity<Worker> result =
                 restTemplate.postForEntity(url, worker, Worker.class);
         return result.getBody();
+    }
+
+    @PostMapping("mq")
+    public String createWorkerMq(@RequestBody Worker worker) {
+        rabbitTemplate.convertAndSend(exchange, routingKey, worker);
+        return "Sent successfully";
     }
 
     @GetMapping

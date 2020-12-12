@@ -50,5 +50,5 @@ service FilmService {
   rpc add(FilmRequest) returns (FilmResponse);
   rpc byId(FilmByIdRequest) returns (FilmResponse);
   rpc byName(FilmByNameRequest) returns (FilmResponse);
-  rpc delete (FilmByIdRequest) returns (DeleteFilmResponse);
+  rpc delete(FilmByIdRequest) returns (DeleteFilmResponse);
 }
