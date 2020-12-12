@@ -9,7 +9,7 @@ import org.lognet.springboot.grpc.GRpcService;
 @GRpcService
 public class SeanceGrpcController extends SeanceServiceGrpc.SeanceServiceImplBase {
 
-    private String url = "localhost";
+    private String url = "cinema-seances";
     private final ManagedChannel channel = ManagedChannelBuilder.forAddress(url, 7082).usePlaintext().build();
     private SeanceServiceGrpc.SeanceServiceBlockingStub stub = SeanceServiceGrpc.newBlockingStub(channel);
 
